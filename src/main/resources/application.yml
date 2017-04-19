@@ -1,0 +1,80 @@
+logging.level.: ${LOGGING_LEVEL_:INFO}
+logging:
+  file: ${LOGGING_FILE:yrd-admin}.log
+  path: ${LOGGING_PATH:${user.home}/data/yrd-admin/logs}
+  level:
+    jndi: ${LOGGING_LEVEL_:INFO}
+
+server.port: ${SERVER_PORT:8700}
+
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME:local-admin}
+  boot:
+    admin:
+      routes:
+        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,hystrix.stream,turbine.stream
+      monitor:
+        period: 10000
+        status-lifetime: 10000
+      autoDeregistration: true
+  cloud:
+    config:
+      enabled: false
+  aop:
+    proxy-target-class: true
+
+eureka:
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:local-admin}
+    nonSecurePort: ${EUREKA_INSTANCE_NONSECUREPORT:8700}
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
+    instance-id: ${spring.application.name}:${EUREKA_INSTANCE_HOSTNAME:local-admin}:${EUREKA_INSTANCE_NONSECUREPORT:${SERVER_PORT:8700}}:${random.value}
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: ${server.context-path:${SERVER_CONTEXTPATH:}}${management.context-path:${MANAGEMENT_CONTEXTPATH:}}${endpoints.info.path:/info}
+    healthCheckUrlPath: ${server.context-path:${SERVER_CONTEXTPATH:}}${management.context-path:${MANAGEMENT_CONTEXTPATH:}}${endpoints.health.path:/health}
+    metadataMap:
+      management.context-path: ${server.context-path:${SERVER_CONTEXTPATH:}}${management.context-path:${MANAGEMENT_CONTEXTPATH:}}
+      management.port: ${management.port:${MANAGEMENT_PORT:${server.port:${SERVER_PORT:8080}}}}
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://user:user_pass@local-eureka:8761/eureka/}
+
+#endpoints.jmx.enabled: true
+endpoints:
+  health:
+    sensitive: true
+security:
+  user:
+    name: ${SECURITY_USER_NAME:admin}
+    password: ${SECURITY_USER_PASSWORD:admin_pass}
+#    role: ${SECURITY_USER_ROLE:ADMIN}
+
+app:
+  adminPrivateKey: ${APP_ADMINPRIVATEKEY:RSA1024_PRIV_PKCS1:MIICXQIBAAKBgQC/gmBcdQZxiQmhQrP1awAZuuOl4snl7cEV8n65osVO7CdqxXG5mUYNVr6siwuTm/SsmBV+86JISlzvMK/Bxwsmf/ApZicgItChmDuU9TCaZIksqnpbtONnCm/sHWwa/2hqPTjdc0LC+jQ/FCU2b9vpbSId0Wg28/gtoGaLWbsm/QIDAQABAoGBAI7dOfl/K5FjA5YTZqB8dBS9wLmtl6Q5W0N+JV9iuAKKVVVnedFVMFcfERsyly5Et6BRzCdqpPN81htxnIvYas2+Nvu5be1NwPAYLW2NUFDRzEAH/vWOLhY2F5uo24AJBHRRCRnLiqq/8aZ9STDdzS8WlHBg5kOforoqREXwmxKBAkEA/lFwu3ftQQyIavV56za+o6C8W/S7GqCWurOo3C+kKHOpUtqRjkacdEoxFCjs92RNJzd+fhGMzUhupKGX1+uKjQJBAMDGmdVknB8iLxm0CWjuRm+q0ciK0Ech2tB+39DsUvVNguvJAbxD+CMiusJ7dCFbVy1G9rjQR2gTLEI52BM0qjECQDHVb4usolb+x7R9yZgnsA+MLZyvRgKfuSl4jvwmcbpjf6h2n9MLTxkSeK+EnXqUsvGeVDEL61VGfjfQWlq7EvkCQQC1/IcLUeCk75OBc1oSyiaKkrta09kN3eMBQ1UtmXwzgYof53GQ9qWRHd8rbHpUZzNkVgLitBVFJhx5JLxcXTJxAkBalCMEuhXGYBkLMhcstJzs+Gk07FkkgV1fC4Kf9Xeu5YLkxS+tjkZt3iwfUo4Ll3m3fWhguLUtf05jUgWClx0t}
+  adminPublicKey: ${APP_ADMINPUBLICKEY:RSA1024_PUB_X509:MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/gmBcdQZxiQmhQrP1awAZuuOl4snl7cEV8n65osVO7CdqxXG5mUYNVr6siwuTm/SsmBV+86JISlzvMK/Bxwsmf/ApZicgItChmDuU9TCaZIksqnpbtONnCm/sHWwa/2hqPTjdc0LC+jQ/FCU2b9vpbSId0Wg28/gtoGaLWbsm/QIDAQAB}
+
+---
+spring:
+  profiles: development.env
+
+---
+spring:
+  profiles: it.env
+
+---
+spring:
+  profiles: staging.env
+
+---
+spring:
+  profiles: production.env
+
+security:
+  user:
+    name: ${SECURITY_USER_NAME:user}
+    password: ${SECURITY_USER_PASSWORD:password}
+    role: ${SECURITY_USER_ROLE:ADMIN}
+app:
+  adminPrivateKey: ${APP_ADMINPRIVATEKEY:RSA1024_PRIV_PKCS1:MIICXQIBAAKBgQC/gmBcdQZxiQmhQrP1awAZuuOl4snl7cEV8n65osVO7CdqxXG5mUYNVr6siwuTm/SsmBV+86JISlzvMK/Bxwsmf/ApZicgItChmDuU9TCaZIksqnpbtONnCm/sHWwa/2hqPTjdc0LC+jQ/FCU2b9vpbSId0Wg28/gtoGaLWbsm/QIDAQABAoGBAI7dOfl/K5FjA5YTZqB8dBS9wLmtl6Q5W0N+JV9iuAKKVVVnedFVMFcfERsyly5Et6BRzCdqpPN81htxnIvYas2+Nvu5be1NwPAYLW2NUFDRzEAH/vWOLhY2F5uo24AJBHRRCRnLiqq/8aZ9STDdzS8WlHBg5kOforoqREXwmxKBAkEA/lFwu3ftQQyIavV56za+o6C8W/S7GqCWurOo3C+kKHOpUtqRjkacdEoxFCjs92RNJzd+fhGMzUhupKGX1+uKjQJBAMDGmdVknB8iLxm0CWjuRm+q0ciK0Ech2tB+39DsUvVNguvJAbxD+CMiusJ7dCFbVy1G9rjQR2gTLEI52BM0qjECQDHVb4usolb+x7R9yZgnsA+MLZyvRgKfuSl4jvwmcbpjf6h2n9MLTxkSeK+EnXqUsvGeVDEL61VGfjfQWlq7EvkCQQC1/IcLUeCk75OBc1oSyiaKkrta09kN3eMBQ1UtmXwzgYof53GQ9qWRHd8rbHpUZzNkVgLitBVFJhx5JLxcXTJxAkBalCMEuhXGYBkLMhcstJzs+Gk07FkkgV1fC4Kf9Xeu5YLkxS+tjkZt3iwfUo4Ll3m3fWhguLUtf05jUgWClx0t}
+  adminPublicKey: ${APP_ADMINPUBLICKEY:RSA1024_PUB_X509:MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/gmBcdQZxiQmhQrP1awAZuuOl4snl7cEV8n65osVO7CdqxXG5mUYNVr6siwuTm/SsmBV+86JISlzvMK/Bxwsmf/ApZicgItChmDuU9TCaZIksqnpbtONnCm/sHWwa/2hqPTjdc0LC+jQ/FCU2b9vpbSId0Wg28/gtoGaLWbsm/QIDAQAB}

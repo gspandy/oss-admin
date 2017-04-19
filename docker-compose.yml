@@ -1,0 +1,49 @@
+
+version: '2.1'
+services:
+  admin:
+    image: ${DOCKER_REGISTRY:-registry.docker.local}/oss-admin:${PROJECT_VERSION:-latest}
+    restart: always
+    command: []
+    container_name: ${EUREKA_INSTANCE_HOSTNAME:-local-admin}
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:-local-admin}
+    ports:
+    - "${EUREKA_INSTANCE_NONSECUREPORT:-8700}:${SERVER_PORT:-8700}"
+    - "${JAVA_DEBUG_PORT:-5005}:${JAVA_DEBUG_PORT:-5005}" # optional
+    - "${JAVA_JMX_PORT:-5000}:${JAVA_JMX_PORT:-5000}" # optional
+    - "${JAVA_JPROFILER_PORT:-8849}:${JAVA_JPROFILER_PORT:-8849}" # optional
+    - "${JAVA_JSTATD_RMI_PORT:-2222}:${JAVA_JSTATD_RMI_PORT:-2222}" # optional
+    - "${JAVA_JSTATD_RH_PORT:-2223}:${JAVA_JSTATD_RH_PORT:-2223}" # optional
+    - "${JAVA_JSTATD_RV_PORT:-2224}:${JAVA_JSTATD_RV_PORT:-2224}" # optional
+    environment:
+    - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:-http://user:user_pass@local-eureka:8761/eureka/}
+    - EUREKA_INSTANCE_HOSTNAME=${EUREKA_INSTANCE_HOSTNAME:-local-admin}
+    - EUREKA_INSTANCE_NONSECUREPORT=${EUREKA_INSTANCE_NONSECUREPORT:-8700}
+    - JAVA_DEBUG_PORT=${JAVA_DEBUG_PORT:-5005} # optional
+    - JAVA_JMC_ENABLED=${JAVA_JMC_ENABLED:-true} # optional
+    - JAVA_JMX_PORT=${JAVA_JMX_PORT:-5000} # optional
+    - JAVA_JPROFILER_CONFIG=${JAVA_JPROFILER_CONFIG:-/root/.jprofiler9/config.xml} # optional
+    - JAVA_JPROFILER_PORT=${JAVA_JPROFILER_PORT:-8849} # optional
+    - JAVA_JSTATD_RMI_PORT=${JAVA_JSTATD_RMI_PORT:-2222} # optional
+    - JAVA_JSTATD_RH_PORT=${JAVA_JSTATD_RH_PORT:-2223} # optional
+    - JAVA_JSTATD_RV_PORT=${JAVA_JSTATD_RV_PORT:-2224} # optional
+    - SECURITY_USER_NAME=${SECURITY_USER_NAME:-admin}
+    - SECURITY_USER_PASSWORD=${SECURITY_USER_PASSWORD:-admin_pass}
+    - SERVER_PORT=${SERVER_PORT:-8700}
+    - SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME:-local-admin}
+    - SPRING_PROFILES_ACTIVE=${ENV:-development}.env
+    volumes:
+    - admin-volume:/root/data
+    - admin-volume:/tmp
+    - ${HOME}/.jprofiler9/config.xml:${JAVA_JPROFILER_CONFIG:-/root/.jprofiler9/config.xml} # optional
+    external_links:
+    - local-eureka:local-eureka
+    - local-configserver:local-configserver
+
+volumes:
+  admin-volume: {}
+
+networks:
+  default:
+    external:
+      name: oss-network

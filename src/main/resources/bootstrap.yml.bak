@@ -1,0 +1,31 @@
+
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME:local-admin}
+  cloud:
+    config:
+      enabled: false
+
+---
+spring:
+  profiles: default
+
+---
+spring:
+  profiles: development.env
+
+---
+spring:
+  profiles: ut.env
+
+---
+spring:
+  profiles: it.env
+
+---
+spring:
+  profiles: staging.env
+
+---
+spring:
+  profiles: production.env
