@@ -1,4 +1,4 @@
-# yrd-admin开发遇到的问题、解决方案
+# oss-admin开发遇到的问题、解决方案
 ### 项目背景
 #### admin简介
  1. spring boot应用的接口大体分为两类， 业务接口和管理接口，并且有单独的security机制， 管理接口主要由actuator来提供，包括系统的健康状态，环境变量信息，日志级别管理，线程信息，堆栈信息等。对这些接口必须进行严格的权限控制，spring boot通常采用basic authentication的security机制来保护这些接口。

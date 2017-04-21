@@ -1,7 +1,7 @@
 logging.level.: ${LOGGING_LEVEL_:INFO}
 logging:
-  file: ${LOGGING_FILE:yrd-admin}.log
-  path: ${LOGGING_PATH:${user.home}/data/yrd-admin/logs}
+  file: ${LOGGING_FILE:oss-admin}.log
+  path: ${LOGGING_PATH:${user.home}/data/oss-admin/logs}
   level:
     jndi: ${LOGGING_LEVEL_:INFO}
 

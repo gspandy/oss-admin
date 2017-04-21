@@ -1,4 +1,4 @@
-# yrd-admin功能介绍
+# oss-admin功能介绍
 ## 基本功能介绍
 + Show health status
 + Show details, like

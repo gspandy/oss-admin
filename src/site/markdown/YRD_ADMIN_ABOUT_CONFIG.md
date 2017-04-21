@@ -1,4 +1,4 @@
-# yrd-admin服务端配置
+# oss-admin服务端配置
 ## 配置说明
   * `spring.boot.admin.url`
     * The admin server urls to register at。即需要注册的目标admin的url。

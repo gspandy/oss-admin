@@ -26,9 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 
-    /**
-     * Below config is a temporary solution to protect management endpoints.
-     */
+    // Below config is a temporary solution to protect management endpoints.
     http
         .authorizeRequests()
         .antMatchers( //
@@ -71,6 +69,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .withUser(user.getName()).password(user.getPassword()).roles(user.getRole().get(USER_ROLE_FIRST_INDEX), user
         .getRole().get(USER_ROLE_SECOND_INDEX)).and()
         .withUser("user").password("user_pass").roles(USER_ROLE_NAME, ADMIN_ROLE_NAME).and()
-        .withUser("yrd").password("yrd").roles(USER_ROLE_NAME);
+        .withUser("oss").password("oss").roles(USER_ROLE_NAME);
   }
 }
