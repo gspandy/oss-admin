@@ -1,11 +1,11 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
 import static com.google.common.base.Charsets.UTF_8;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.context.RequestContext;
-import com.yirendai.oss.lib.common.crypto.EncodeDecryptor;
+import cn.home1.oss.lib.common.crypto.EncodeDecryptor;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

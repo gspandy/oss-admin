@@ -1,4 +1,4 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;

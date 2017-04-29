@@ -1,4 +1,4 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,7 +24,7 @@ public class MetricsIT {
   @Autowired
   private TestRestTemplate testRestTemplate;
 
-  private final String targetCounterString = "\"counter.servo.string_com.yirendai.oss.environment.admin.controller" +
+  private final String targetCounterString = "\"counter.servo.string_cn.home1.oss.environment.admin.controller" +
       ".greetingcontroller.greeting()-invokenum\":1";
 
 
@@ -33,7 +33,7 @@ public class MetricsIT {
     this.testRestTemplate.withBasicAuth("admin", "admin_pass");
     String greeting = this.testRestTemplate.getForObject("/greeting", String.class);
     String metrics = this.testRestTemplate.withBasicAuth("admin", "admin_pass").getForObject("/metrics", String.class);
-    assertThat(metrics).contains("gauge.servo.string_com.yirendai.oss.environment.admin.controller.greetingcontroller" +
+    assertThat(metrics).contains("gauge.servo.string_cn.home1.oss.environment.admin.controller.greetingcontroller" +
         ".greeting()-invoketime");
     assertThat(metrics).contains(targetCounterString);
   }

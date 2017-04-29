@@ -1,6 +1,6 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
-import com.yirendai.oss.lib.common.crypto.EncodeDecryptor;
+import cn.home1.oss.lib.common.crypto.EncodeDecryptor;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
