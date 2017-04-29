@@ -1,6 +1,6 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
-import static com.yirendai.oss.lib.common.BasicAuthUtils.basicAuthHeader;
+import static cn.home1.oss.lib.common.BasicAuthUtils.basicAuthHeader;
 
 import de.codecentric.boot.admin.event.ClientApplicationStatusChangedEvent;
 import de.codecentric.boot.admin.model.Application;

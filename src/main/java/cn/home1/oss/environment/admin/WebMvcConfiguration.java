@@ -1,4 +1,4 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

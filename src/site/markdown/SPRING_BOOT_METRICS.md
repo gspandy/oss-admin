@@ -6,7 +6,7 @@
 ### 调用次数采集--使用`CounterService`
 > 注意事项: 方法increment()的第一个参数要添加前缀`"meter."`。参考`ServoMetricServices`的实现逻辑。
 
-      @Before("execution(* com.yirendai.oss.environment.admin.controller.*.*(..))")
+      @Before("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
       public void countServiceInvoke(JoinPoint joinPoint) {
         this.counterService.increment("meter." + joinPoint.getSignature() + "-invokeNum");
       }
@@ -18,7 +18,7 @@ netflix支持接口的多种数据统计，配置方法稍微不同，spring boo
 #### 最近一次接口响应时间
 默认收集最近一次接口的响应时间，配置为：
 
-    @Around("execution(* com.yirendai.oss.environment.admin.controller.*.*(..))")
+    @Around("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
     public Object latencyService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
       long start = System.currentTimeMillis();
       Object proceed = proceedingJoinPoint.proceed();
@@ -33,11 +33,11 @@ netflix支持接口的多种数据统计，配置方法稍微不同，spring boo
     this.gaugeService.submit("timer." + proceedingJoinPoint.getSignature().toString() + "-invokeTime", end - start);
 统计结果实例：
 
-    "counter.servo.string_com.yirendai.oss.environment.admin.controller.greetingcontroller.greeting()-invokenum": 101,
-    "normalized.servo.string_com.yirendai.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.totaltime": 1688.8166666666666,
-    "normalized.servo.string_com.yirendai.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.count": 1.6833333333333333,
-    "gauge.servo.string_com.yirendai.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.min": 1002,
-    "gauge.servo.string_com.yirendai.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.max": 1011
+    "counter.servo.string_cn.home1.oss.environment.admin.controller.greetingcontroller.greeting()-invokenum": 101,
+    "normalized.servo.string_cn.home1.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.totaltime": 1688.8166666666666,
+    "normalized.servo.string_cn.home1.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.count": 1.6833333333333333,
+    "gauge.servo.string_cn.home1.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.min": 1002,
+    "gauge.servo.string_cn.home1.oss.environment.admin.controller.greetingcontroller.greeting()-invoketime.max": 1011
 ## 总结
 通过spring aop可以很容易的配置spring mvc接口和RESTful接口的被调用次数和接口的执行时间。统计配置类的完整代码：
 
@@ -59,12 +59,12 @@ netflix支持接口的多种数据统计，配置方法稍微不同，spring boo
         return new ServiceMonitor(counterService, gaugeService);
       }
     
-      @Before("execution(* com.yirendai.oss.environment.admin.controller.*.*(..))")
+      @Before("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
       public void countServiceInvoke(JoinPoint joinPoint) {
         this.counterService.increment("meter." + joinPoint.getSignature() + "-invokeNum");
       }
     
-      @Around("execution(* com.yirendai.oss.environment.admin.controller.*.*(..))")
+      @Around("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
       public Object latencyService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         Object proceed = proceedingJoinPoint.proceed();

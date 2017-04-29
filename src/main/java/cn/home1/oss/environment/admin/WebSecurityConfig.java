@@ -1,4 +1,4 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;

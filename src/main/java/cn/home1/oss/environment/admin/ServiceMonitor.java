@@ -1,4 +1,4 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -32,12 +32,12 @@ public class ServiceMonitor {
     return new ServiceMonitor(counterService, gaugeService);
   }
 
-  @Before("execution(* com.yirendai.oss.environment.admin.controller.*.*(..))")
+  @Before("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
   public void countServiceInvoke(JoinPoint joinPoint) {
     this.counterService.increment("meter." + joinPoint.getSignature() + "-invokeNum");
   }
 
-  @Around("execution(* com.yirendai.oss.environment.admin.controller.*.*(..))")
+  @Around("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
   public Object latencyService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     long start = System.currentTimeMillis();
     Object proceed = proceedingJoinPoint.proceed();

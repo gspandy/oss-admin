@@ -1,8 +1,8 @@
-package com.yirendai.oss.environment.admin;
+package cn.home1.oss.environment.admin;
 
-import com.yirendai.oss.lib.common.crypto.Cryptos;
-import com.yirendai.oss.lib.common.crypto.EncodeDecryptor;
-import com.yirendai.oss.lib.common.crypto.KeyExpression;
+import cn.home1.oss.lib.common.crypto.Cryptos;
+import cn.home1.oss.lib.common.crypto.EncodeDecryptor;
+import cn.home1.oss.lib.common.crypto.KeyExpression;
 
 import org.junit.Assert;
 import org.junit.Test;
