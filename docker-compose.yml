@@ -2,7 +2,7 @@
 version: '2.1'
 services:
   admin:
-    image: ${DOCKER_REGISTRY:-registry.docker.local}/oss-admin:${PROJECT_VERSION:-latest}
+    image: ${DOCKER_REGISTRY:-home1oss}/oss-admin:${PROJECT_VERSION:-latest}
     restart: always
     command: []
     container_name: ${EUREKA_INSTANCE_HOSTNAME:-admin.local}
@@ -15,6 +15,8 @@ services:
     - "${JAVA_JSTATD_RMI_PORT:-2222}:${JAVA_JSTATD_RMI_PORT:-2222}" # optional
     - "${JAVA_JSTATD_RH_PORT:-2223}:${JAVA_JSTATD_RH_PORT:-2223}" # optional
     - "${JAVA_JSTATD_RV_PORT:-2224}:${JAVA_JSTATD_RV_PORT:-2224}" # optional
+
+
     environment:
     - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:-http://user:user_pass@eureka.local:8761/eureka/}
     - EUREKA_INSTANCE_HOSTNAME=${EUREKA_INSTANCE_HOSTNAME:-admin.local}
@@ -35,7 +37,7 @@ services:
     volumes:
     - admin-volume:/root/data
     - admin-volume:/tmp
-    - ${HOME}/.jprofiler9/config.xml:${JAVA_JPROFILER_CONFIG:-/root/.jprofiler9/config.xml} # optional
+    #- ${HOME}/.jprofiler9/config.xml:${JAVA_JPROFILER_CONFIG:-/root/.jprofiler9/config.xml} # optional
     external_links:
     - eureka.local:eureka.local
     - configserver.local:configserver.local
