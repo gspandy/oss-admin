@@ -1,7 +1,7 @@
 
 spring:
   application:
-    name: ${SPRING_APPLICATION_NAME:admin.local}
+    name: ${SPRING_APPLICATION_NAME:oss-admin.local}
   cloud:
     config:
       enabled: false

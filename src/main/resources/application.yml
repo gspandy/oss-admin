@@ -9,7 +9,7 @@ server.port: ${SERVER_PORT:8700}
 
 spring:
   application:
-    name: ${SPRING_APPLICATION_NAME:admin.local}
+    name: ${SPRING_APPLICATION_NAME:oss-admin.local}
   boot:
     admin:
       routes:
@@ -26,10 +26,10 @@ spring:
 
 eureka:
   instance:
-    hostname: ${EUREKA_INSTANCE_HOSTNAME:admin.local}
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:oss-admin.local}
     nonSecurePort: ${EUREKA_INSTANCE_NONSECUREPORT:8700}
     prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:false}
-    instance-id: ${spring.application.name}:${EUREKA_INSTANCE_HOSTNAME:admin.local}:${EUREKA_INSTANCE_NONSECUREPORT:${SERVER_PORT:8700}}:${random.value}
+    instance-id: ${spring.application.name}:${EUREKA_INSTANCE_HOSTNAME:oss-admin.local}:${EUREKA_INSTANCE_NONSECUREPORT:${SERVER_PORT:8700}}:${random.value}
     leaseRenewalIntervalInSeconds: 10
     statusPageUrlPath: ${server.context-path:${SERVER_CONTEXTPATH:}}${management.context-path:${MANAGEMENT_CONTEXTPATH:}}${endpoints.info.path:/info}
     healthCheckUrlPath: ${server.context-path:${SERVER_CONTEXTPATH:}}${management.context-path:${MANAGEMENT_CONTEXTPATH:}}${endpoints.health.path:/health}
@@ -38,7 +38,7 @@ eureka:
       management.port: ${management.port:${MANAGEMENT_PORT:${server.port:${SERVER_PORT:8080}}}}
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://user:user_pass@eureka.local:8761/eureka/}
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://user:user_pass@oss-eureka.local:8761/eureka/}
 
 #endpoints.jmx.enabled: true
 endpoints:
