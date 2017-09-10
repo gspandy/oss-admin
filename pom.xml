@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.home1</groupId>
         <artifactId>oss-build</artifactId>
-        <version>1.0.11.OSS</version>
+        <version>1.0.15.OSS</version>
     </parent>
 
     <artifactId>oss-admin</artifactId>
@@ -32,9 +32,9 @@
     </scm>
 
     <properties>
-        <spring-boot-admin.version>1.4.4</spring-boot-admin.version>
-        <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
-        <oss-release.version>1.0.6.OSS</oss-release.version>
+        <oss-release.version>1.0.10.OSS-SNAPSHOT</oss-release.version>
+        <spring-boot.version>1.5.6.RELEASE</spring-boot.version>
+        <spring-boot-admin.version>1.5.4</spring-boot-admin.version>
     </properties>
 
     <build>
