@@ -11,25 +11,23 @@ public class ClientKeyStore {
 
   private final ConcurrentMap<String, ClientKey> keysMap = new ConcurrentHashMap<>();
 
-
-  public ClientKey save(ClientKey clientKey) {
-    return keysMap.put(clientKey.getServiceId(), clientKey);
+  public ClientKey save(final ClientKey clientKey) {
+    return this.keysMap.put(clientKey.getServiceId(), clientKey);
   }
 
   public Collection<ClientKey> findAll() {
-    return keysMap.values();
+    return this.keysMap.values();
   }
 
-  public ClientKey find(String serviceId) {
-    return keysMap.get(serviceId);
+  public ClientKey find(final String serviceId) {
+    return this.keysMap.get(serviceId);
   }
 
-  public ClientKey delete(String serviceId) {
-    return keysMap.remove(serviceId);
+  public ClientKey delete(final String serviceId) {
+    return this.keysMap.remove(serviceId);
   }
 
-  public boolean isAvailable(String serviceId) {
-    ClientKey clientKey = find(serviceId);
-    return (clientKey == null) ? false : true;
+  public boolean isAvailable(final String serviceId) {
+    return find(serviceId) != null;
   }
 }

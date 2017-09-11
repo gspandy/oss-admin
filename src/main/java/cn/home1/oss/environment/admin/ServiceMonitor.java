@@ -11,8 +11,8 @@ import org.springframework.boot.actuate.metrics.GaugeService;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by leo on 17/1/10.
- * This class is to gather the times a method is invoked and the execution time for a method.
+ * Created by leo on 17/1/10. This class is to gather the times a method is invoked and the execution time for a
+ * method.
  */
 @Aspect
 @Component
@@ -22,7 +22,7 @@ public class ServiceMonitor {
 
   private final GaugeService gaugeService;
 
-  public ServiceMonitor(CounterService counterService, GaugeService gaugeService) {
+  public ServiceMonitor(final CounterService counterService, final GaugeService gaugeService) {
     this.counterService = counterService;
     this.gaugeService = gaugeService;
   }
@@ -33,16 +33,16 @@ public class ServiceMonitor {
   }
 
   @Before("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
-  public void countServiceInvoke(JoinPoint joinPoint) {
+  public void countServiceInvoke(final JoinPoint joinPoint) {
     this.counterService.increment("meter." + joinPoint.getSignature() + "-invokeNum");
   }
 
   @Around("execution(* cn.home1.oss.environment.admin.controller.*.*(..))")
-  public Object latencyService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+  public Object latencyService(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     long start = System.currentTimeMillis();
-    Object proceed = proceedingJoinPoint.proceed();
+    final Object proceed = proceedingJoinPoint.proceed();
     long end = System.currentTimeMillis();
-    this.gaugeService.submit( proceedingJoinPoint.getSignature().toString() + "-invokeTime", (double)end - start);
+    this.gaugeService.submit(proceedingJoinPoint.getSignature().toString() + "-invokeTime", (double) end - start);
     return proceed;
   }
 }

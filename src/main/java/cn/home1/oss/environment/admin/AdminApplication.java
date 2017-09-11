@@ -1,14 +1,10 @@
 package cn.home1.oss.environment.admin;
 
-import cn.home1.oss.boot.autoconfigure.AppProperties;
-import cn.home1.oss.lib.common.crypto.Cryptos;
-import cn.home1.oss.lib.common.crypto.EncodeDecryptor;
-import cn.home1.oss.lib.common.crypto.KeyExpression;
-
 import de.codecentric.boot.admin.config.AdminServerProperties;
 import de.codecentric.boot.admin.config.EnableAdminServer;
 import de.codecentric.boot.admin.registry.StatusUpdater;
 import de.codecentric.boot.admin.registry.store.ApplicationStore;
+import de.codecentric.boot.admin.web.client.ApplicationOperations;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +29,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
+import cn.home1.oss.boot.autoconfigure.AppProperties;
+import cn.home1.oss.lib.common.crypto.Cryptos;
+import cn.home1.oss.lib.common.crypto.EncodeDecryptor;
+import cn.home1.oss.lib.common.crypto.KeyExpression;
+
 @Configuration
 @EnableAutoConfiguration
 @EnableAdminServer
@@ -44,18 +45,21 @@ import org.springframework.web.client.RestTemplate;
 public class AdminApplication implements ApplicationListener<ContextRefreshedEvent> {
 
   @Autowired
-  Environment environment;
+  private Environment environment;
 
   @Autowired
-  ApplicationContext applicationContext;
+  private ApplicationContext applicationContext;
 
   @Autowired
-  AdminServerProperties adminServerProperties;
+  private ApplicationOperations applicationOperations;
+
+  @Autowired
+  private AdminServerProperties adminServerProperties;
 
   @Autowired
   private ApplicationStore applicationStore;
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     SpringApplication.run(AdminApplication.class, args);
   }
 
@@ -76,13 +80,13 @@ public class AdminApplication implements ApplicationListener<ContextRefreshedEve
   }
 
   @Bean
-  public RestTemplate restTemplate(RestTemplateBuilder builder) {
+  public RestTemplate restTemplate(final RestTemplateBuilder builder) {
     return builder.build();
   }
 
   @Bean
   public EncodeDecryptor decryptor() {
-    String adminPrivateKey = this.environment.getProperty("app.adminPrivateKey");
+    final String adminPrivateKey = this.environment.getProperty("app.adminPrivateKey");
     return Cryptos.decryptor(new KeyExpression(adminPrivateKey));
   }
 
@@ -93,23 +97,24 @@ public class AdminApplication implements ApplicationListener<ContextRefreshedEve
 
     log.info("Registering patched version of de.codecentric.boot.admin.registry.StatusUpdates");
 
-    RestTemplate template = new RestTemplate();
-    template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-    template.setErrorHandler(new DefaultResponseErrorHandler() {
+    final RestTemplate restTemplate = new RestTemplate();
+    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+    restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
       @Override
-      protected boolean hasError(HttpStatus statusCode) {
+      protected boolean hasError(final HttpStatus statusCode) {
         return false;
       }
     });
-    StatusUpdater statusUpdater = new PatchedStatusUpdater(template, applicationStore);
-    statusUpdater.setStatusLifetime(adminServerProperties.getMonitor().getStatusLifetime());
+
+    final StatusUpdater statusUpdater = new PatchedStatusUpdater(this.applicationStore, this.applicationOperations, restTemplate);
+    statusUpdater.setStatusLifetime(this.adminServerProperties.getMonitor().getStatusLifetime());
 
     return statusUpdater;
   }
 
   @Override
-  public void onApplicationEvent(ContextRefreshedEvent event) {
-    PatchedStatusUpdater statusUpdater = (PatchedStatusUpdater) applicationContext.getBean("statusUpdater");
+  public void onApplicationEvent(final ContextRefreshedEvent event) {
+    final PatchedStatusUpdater statusUpdater = (PatchedStatusUpdater) this.applicationContext.getBean("statusUpdater");
     statusUpdater.setActive(true);
   }
 }

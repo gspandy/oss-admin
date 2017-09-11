@@ -26,7 +26,7 @@ public class ClientKey implements Serializable {
   private String userName;
   private String password;
 
-  public ClientKey(String serviceId, String userName, String password) {
+  public ClientKey(final String serviceId, final String userName, final String password) {
     this.serviceId = serviceId;
     this.userName = userName;
     this.password = password;

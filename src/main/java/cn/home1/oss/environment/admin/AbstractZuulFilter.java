@@ -6,6 +6,7 @@ import com.netflix.zuul.ZuulFilter;
  * Created by leo on 17/1/6.
  */
 public abstract class AbstractZuulFilter extends ZuulFilter {
+  
   private final int filterOrder;
   private final String filterType;
 

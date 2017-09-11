@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private static final int USER_ROLE_SECOND_INDEX = 1;
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  protected void configure(final HttpSecurity http) throws Exception {
 
     // Below config is a temporary solution to protect management endpoints.
     http
@@ -43,8 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic();
 
     http
-      .csrf().disable()
-      .authorizeRequests()
+        .csrf().disable()
+        .authorizeRequests()
         .antMatchers("/", "/index.html").hasRole(USER_ROLE_NAME)
         .antMatchers("/api/applications/**/env",
             "/api/applications/**/jolokia",
@@ -52,17 +52,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .hasRole(ADMIN_ROLE_NAME)
         .anyRequest().permitAll()
         .and()
-      .formLogin()
+        .formLogin()
         .loginPage("/login")
         .defaultSuccessUrl("/")
         .permitAll()
         .and()
-      .logout()
+        .logout()
         .permitAll();
   }
 
   @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+  public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
     SecurityProperties.User user = securityProperties.getUser();
     auth
         .inMemoryAuthentication()
